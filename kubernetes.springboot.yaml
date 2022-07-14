@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: springboot-application
+  template:
+    metadata:
+      labels:
+        app: springboot-application
+    spec:
+      containers:
+        - name: discovery-service-springboot
+          image: dimmaryanto93/springboot2-discovery-service-example:1.0.4-release
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: springboot-config
+          command:
+            - "java"
+            - "-jar"
+            - "-Djava.security.egd=file:/dev/./urandom"
+            - "/app.jar"
+          args:
+            - "--DISCOVERY_SERVICE_HOST=$(DISCOVERY_SERVICE_HOST)"
+            - "--DISCOVERY_SERVICE_URL=$(DISCOVERY_SERVICE_URL)"
+            - "--DATABASE_HOST=$(DATABASE_HOST)"
+            - "--DATABASE_PORT=$(DATABASE_PORT)"
+            - "--DATABASE_USER=$(DATABASE_USER)"
+            - "--DATABASE_PASSWORD=$(DATABASE_PASSWORD)"
+            - "--DATABASE_NAME=$(DATABASE_NAME)"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: springboot-config
+  labels:
+    app: springboot-application
+data:
+  DISCOVERY_SERVICE_HOST: "consul-service"
+  DISCOVERY_SERVICE_URL: "8500"
+  DATABASE_HOST: "database-service"
+  DATABASE_PORT: "5432"
+  DATABASE_USER: "discovery_service_db"
+  DATABASE_PASSWORD: "discovery_service_db"
+  DATABASE_NAME: "discovery_service_db"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-service
+spec:
+  selector:
+    app: springboot-application
+  ports:
+    - port: 8080
+      protocol: "TCP"
+      targetPort: 8080

@@ -1,0 +1,8 @@
+#!/bin/bash
+set -ex
+
+PROJECT_NAME="$1"
+
+echo "current HOST_IP=$HOST_IP"
+
+exec java -DDISCOVERY_SERVICE_HOST=10.0.18.242 -DDISCOVERY_SERVICE_PORT=80 $MEM_OPTS $GC_OPTS $START_OPTS $BASE_OPTS  -jar -server ${PROJECT_NAME}.jar

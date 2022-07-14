@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: springboot-discovery-service-example-consumer
+  cloud:
+    consul:
+      discovery:
+        enabled: true
+        instance-id: ${spring.application.name}:${random.value}
+        prefer-ip-address: true
+      host: ${DISCOVERY_SERVICE_HOST:localhost}
+      port: ${DISCOVERY_SERVICE_PORT:8500}
