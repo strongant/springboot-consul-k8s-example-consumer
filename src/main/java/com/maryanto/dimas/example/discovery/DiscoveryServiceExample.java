@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @EnableDiscoveryClient
 @SpringBootApplication
+@EnableFeignClients
 public class DiscoveryServiceExample {
 
 	@LoadBalanced
