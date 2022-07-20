@@ -57,6 +57,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.maryanto.dimas.example.discovery</groupId>
+            <artifactId>server-feign</artifactId>
+            <version>1.0.5-release</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -15,9 +15,8 @@ import java.util.Map;
 @RequestMapping("/api")
 public class ExampleRestController {
 
-
     @Autowired
-    private RestTemplate restTemplate;
+    private ExampleFeign exampleFeign;
 
 
     @Value("${server.port}")
@@ -35,6 +34,6 @@ public class ExampleRestController {
 
     @GetMapping("/call")
     public String call() {
-        return restTemplate.getForObject("http://springboot-discovery-service-example/api/call", String.class);
+        return exampleFeign.call();
     }
 }
