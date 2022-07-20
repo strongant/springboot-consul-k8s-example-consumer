@@ -59,8 +59,8 @@
         </dependency>
         <dependency>
             <groupId>com.maryanto.dimas.example.discovery</groupId>
-            <artifactId>server-feign</artifactId>
-            <version>1.0.5-release</version>
+            <artifactId>springboot-consul-k8s-example</artifactId>
+            <version>1.0.6-release</version>
         </dependency>
     </dependencies>
 
